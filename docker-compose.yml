@@ -1,0 +1,30 @@
+version: '3.7'
+services:
+    dev:
+        build:
+            context: ./docker/php
+        ports:
+            - "9001:9001"
+        volumes:
+            - .:/srv/app
+            - ./docker/php/supervisor:/etc/supervisor/conf.d
+        links:
+            - database
+            - rabbitmq
+
+    database:
+        image: mariadb:10.3
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: rabbitdemo
+            MYSQL_USER: user
+            MYSQL_PASSWORD: root
+        ports:
+            - "9101:3306"
+
+    rabbitmq:
+        image: rabbitmq:3.7.15-management-alpine
+        hostname: rabbitmq1
+        ports:
+            - "5672:5672"
+            - "15672:15672"
