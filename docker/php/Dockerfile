@@ -7,6 +7,7 @@ RUN apt-get update && apt-get install -y \
         libzip-dev \
     && docker-php-ext-install -j$(nproc) bcmath \
     && docker-php-ext-install -j$(nproc) pdo_mysql \
+    && docker-php-ext-install -j$(nproc) pcntl \
     && docker-php-ext-install -j$(nproc) sockets \
     && docker-php-ext-configure zip --with-libzip \
     && docker-php-ext-install -j$(nproc) zip \
