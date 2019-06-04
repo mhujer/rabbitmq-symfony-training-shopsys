@@ -7,12 +7,17 @@ old_sound_rabbit_mq:
         product_reindex:
             connection:       default
             exchange_options: { name: 'product_reindex', type: direct }
-            queue_options:    { name: 'product_reindex' }
+        product_reindex_dlx:
+            connection:       default
+            exchange_options: { name: 'product_reindex_dlx', type: fanout }
+            queue_options:    { name: 'product_reindex_dlx' }
 
     consumers:
         product_reindex:
             connection:       default
             exchange_options: { name: 'product_reindex', type: direct }
-            queue_options:    { name: 'product_reindex'}
+            queue_options:
+                name: 'product_reindex'
+                arguments: {'x-dead-letter-exchange': ['S', 'product_reindex_dlx']}
             qos_options:      { prefetch_count: 1 }
             callback:         App\Product\Index\ReindexProductConsumerCallback
