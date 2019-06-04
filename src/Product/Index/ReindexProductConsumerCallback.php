@@ -8,7 +8,7 @@ use OldSound\RabbitMqBundle\RabbitMq\DequeuerInterface;
 use PhpAmqpLib\Message\AMQPMessage;
 use Ramsey\Uuid\Uuid;
 
-final class ReindexProductConsumer // ConsumerCallback
+final class ReindexProductConsumerCallback
     implements \OldSound\RabbitMqBundle\RabbitMq\ConsumerInterface
 {
 
