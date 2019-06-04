@@ -34,9 +34,13 @@ final class ProductFacade
         );
 
         $this->entityManager->persist($product);
-        $this->reindexProductProducer->publish($product->getId()->toString());
 
-        $this->entityManager->flush();
+        $this->entityManager->transactional(function () use ($product) {
+            $this->entityManager->flush();
+            $this->reindexProductProducer->publish(
+                $product->getId()->toString()
+            );
+        });
 
         return $product;
     }

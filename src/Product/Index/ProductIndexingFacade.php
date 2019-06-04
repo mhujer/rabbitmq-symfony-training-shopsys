@@ -23,6 +23,10 @@ final class ProductIndexingFacade
     {
         $product = $this->entityManager->getRepository(Product::class)->find($productId);
 
+        if (random_int(1, 100) < 50) {
+            throw new \Exception('Service is not available, processing failed');
+        }
+
         // do some hard indexing here
         usleep(300 * 1000);
 
