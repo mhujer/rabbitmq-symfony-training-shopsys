@@ -3,17 +3,23 @@
 namespace App\Product;
 
 use Doctrine\ORM\EntityManagerInterface;
+use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
 
 final class ProductFacade
 {
+
+    /** @var \OldSound\RabbitMqBundle\RabbitMq\ProducerInterface */
+    private $reindexProductProducer;
 
     /** @var \Doctrine\ORM\EntityManagerInterface */
     private $entityManager;
 
     public function __construct(
+        ProducerInterface $reindexProductProducer,
         EntityManagerInterface $entityManager
     )
     {
+        $this->reindexProductProducer = $reindexProductProducer;
         $this->entityManager = $entityManager;
     }
 
@@ -28,6 +34,8 @@ final class ProductFacade
         );
 
         $this->entityManager->persist($product);
+        $this->reindexProductProducer->publish($product->getId()->toString());
+
         $this->entityManager->flush();
 
         return $product;
