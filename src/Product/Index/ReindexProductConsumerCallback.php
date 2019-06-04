@@ -38,9 +38,14 @@ final class ReindexProductConsumerCallback
         $this->entityManager->clear();
 
         $productIdPayload = $message->getBody();
-        $productId = Uuid::fromString($productIdPayload);
-
         echo 'Will index product ' . $productIdPayload . "\n";
+
+        if (!Uuid::isValid($productIdPayload)) {
+            echo sprintf('Invalid UUID "%s"!', $productIdPayload) . "\n";
+            return ConsumerInterface::MSG_REJECT;
+        }
+
+        $productId = Uuid::fromString($productIdPayload);
 
         try {
             $product = $this->productIndexingFacade->reindexProduct($productId);

@@ -24,7 +24,7 @@ final class ProductIndexingFacade
         $product = $this->entityManager->getRepository(Product::class)->find($productId);
 
         // not a good example, I just need a DB update/insert here
-        $productCopy = new Product($product->getName() . '-2', $product->getPrice());
+ /*       $productCopy = new Product($product->getName() . '-2', $product->getPrice());
         $this->entityManager->persist($productCopy);
         $this->entityManager->flush();
 
@@ -36,7 +36,7 @@ final class ProductIndexingFacade
             $productClone = clone $product;
             $this->entityManager->persist($productClone);
             $this->entityManager->flush();
-        }
+        }*/
 
         // do some hard indexing here
         usleep(300 * 1000);
