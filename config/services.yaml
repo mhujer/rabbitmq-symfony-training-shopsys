@@ -22,3 +22,6 @@ services:
 
     App\Product\ProductFacade:
         $reindexProductProducer: '@old_sound_rabbit_mq.product_reindex_producer'
+
+    App\Product\Index\ReindexProductConsumer:
+        $dequeuer: '@old_sound_rabbit_mq.product_reindex_consumer'

@@ -28,9 +28,11 @@ final class ProductIndexingFacade
         $this->entityManager->persist($productCopy);
         $this->entityManager->flush();
 
+        if (random_int(1, 100) < 50) {
+            throw new \RuntimeException('Service is not available, processing failed');
+        }
 
         if (random_int(1, 100) < 50) {
-            //throw new \Exception('Service is not available, processing failed');
             $productClone = clone $product;
             $this->entityManager->persist($productClone);
             $this->entityManager->flush();

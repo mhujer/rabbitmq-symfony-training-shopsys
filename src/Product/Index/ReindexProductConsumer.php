@@ -44,7 +44,7 @@ final class ReindexProductConsumer // ConsumerCallback
 
         try {
             $product = $this->productIndexingFacade->reindexProduct($productId);
-        } catch (\Exception $e) { // @todo should be specific exception!
+        } catch (\RuntimeException $e) { // @todo should be specific exception!
             echo $e->getMessage() . "\n";
             echo 'Indexing failed, requeueing' . "\n";
 
