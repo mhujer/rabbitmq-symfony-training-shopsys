@@ -38,7 +38,7 @@ final class ProductFacade
         $this->entityManager->transactional(function () use ($product) {
             $this->entityManager->flush();
             $this->reindexProductProducer->publish(
-                substr($product->getId()->toString(), 0, 35)
+                $product->getId()->toString()
             );
         });
 
